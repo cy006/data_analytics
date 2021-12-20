@@ -6,14 +6,14 @@ root: intro
 parts:
 - caption: Restwertermittlung
   chapters:
-  - file: content/plan_restwertermittlung
+  - file: plan_restwertermittlung
   - file: content/webscraper_mobile
   - file: content/data_cleaning
   - file: content/EDA_Regression_Diagnostic
   - file: content/modelbuilding_restwertermittlung
 - caption: Leasingrisiko
   chapters:
-  - file: content/plan_leasingrisiko
+  - file: plan_leasingrisiko
   - file: content/Create_clean_Dataset
   - file: content/Exploration_leasingrisk
   - file: content/Modelbuilding_leasingrisk
