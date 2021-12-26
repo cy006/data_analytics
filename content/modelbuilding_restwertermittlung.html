@@ -318,6 +318,43 @@
    Actual vs Predicted
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weiterer-ansatz-lasso-regression">
+   Weiterer Ansatz: Lasso Regression
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encode-categorial-variables">
+     Encode categorial variables
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#split-data">
+     Split Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#standardisierung">
+     Standardisierung
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lasso-mit-dem-optimalen-alpha-wert">
+     Lasso mit dem optimalen Alpha-Wert
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erstellung-des-lasso-modells">
+     Erstellung des Lasso Modells
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#modell-evaluation">
+     Modell Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -668,33 +705,33 @@ memory usage: 87.5+ KB
       <th>0</th>
       <td>LinearRegression()</td>
       <td>{'simpleimputer__strategy': 'mean'}</td>
-      <td>0.717930</td>
-      <td>5971.553148</td>
-      <td>7844.442747</td>
+      <td>0.710645</td>
+      <td>5553.254333</td>
+      <td>7508.518152</td>
     </tr>
     <tr>
       <th>1</th>
       <td>KNeighborsRegressor()</td>
       <td>{'simpleimputer__strategy': 'mean'}</td>
-      <td>0.381121</td>
-      <td>8902.157000</td>
-      <td>11619.473934</td>
+      <td>0.301602</td>
+      <td>8985.014000</td>
+      <td>11665.148879</td>
     </tr>
     <tr>
       <th>2</th>
       <td>RandomForestRegressor()</td>
-      <td>{'simpleimputer__strategy': 'mean'}</td>
-      <td>0.827161</td>
-      <td>4059.233793</td>
-      <td>6140.518945</td>
+      <td>{'simpleimputer__strategy': 'most_frequent'}</td>
+      <td>0.852840</td>
+      <td>3451.931985</td>
+      <td>5354.676415</td>
     </tr>
     <tr>
       <th>3</th>
       <td>GradientBoostingRegressor()</td>
-      <td>{'simpleimputer__strategy': 'most_frequent'}</td>
-      <td>0.817487</td>
-      <td>4618.410241</td>
-      <td>6310.011491</td>
+      <td>{'simpleimputer__strategy': 'median'}</td>
+      <td>0.831229</td>
+      <td>4020.479805</td>
+      <td>5734.396308</td>
     </tr>
   </tbody>
 </table>
@@ -1137,15 +1174,11 @@ memory usage: 87.5+ KB
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline2 done
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline3 done
+pipeline3 done
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline4 done
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline5 done
+pipeline5 done
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline6 done
@@ -1155,10 +1188,10 @@ memory usage: 87.5+ KB
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline8 done
+pipeline9 done
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline9 done
-pipeline10 done
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline10 done
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipeline11 done
@@ -1465,19 +1498,19 @@ pipeline10 done
 <div class="section" id="lineare-regression">
 <h3>Lineare Regression<a class="headerlink" href="#lineare-regression" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Bei der linearen Regression, hat sich heruasgestellt, dass man mit dem MinMax Scaler und dem OnehotEncoder den besten Wert erzielt.</p></li>
+<li><p>Bei der linearen Regression, hat sich herausgestellt, dass man mit dem MinMax Scaler und dem OnehotEncoder den besten Wert erzielt.</p></li>
 <li><p>In der Regressions Diagnostic wurde eigentlich erkannt, dass das Feature “hubraum” für eine Multikollinearität verantwortlich ist. Beim Testen hat sich jedoch gezeigt, dass das Modell mit dem Feature “hubraum” eine bessere Performance liefert.</p></li>
 <li><p>Vergleicht man das Baselinemodell mit dem Modell aus der Pipeline 10, kann man erkennen, dass man durch weitere Preprocessing-Schritte das Modell um 13,48% verbessert werden konnte.</p></li>
 <li><p>R2 = 0,848 -&gt; Das Regressionsmodell erklärt 84,8% der Streuung.</p></li>
 <li><p>RMSE = 5805,33 -&gt; Die vorhergesagten Werte liegen im Durchschnitt mit einem Abstand von 5805,33€ von den beobachteten Werten entfernt.</p></li>
-<li><p>MAE = 4191,97 -&gt; Der durschnittliche Vertikale Abstand zu den beobachteten Werten liegt bei 4191,97.</p></li>
+<li><p>MAE = 4191,97 -&gt; Der durchschnittliche vertikale Abstand zu den beobachteten Werten liegt bei 4191,97.</p></li>
 </ul>
 </div>
 <div class="section" id="knn-regression">
 <h3>KNN Regression<a class="headerlink" href="#knn-regression" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Die KNN Regression hat im Vergleich mit der linearen Regresion änhlich gut abgeschnitten.</p></li>
-<li><p>Auch hier hat sich gezeigt, dass weitere Preprocessing-Schritte einen positiven Eininfluss auf das Modell haben.</p></li>
+<li><p>Die KNN Regression hat im Vergleich mit der linearen Regression ähnlich gut abgeschnitten.</p></li>
+<li><p>Auch hier hat sich gezeigt, dass weitere Preprocessing-Schritte einen positiven Einfluss auf das Modell haben.</p></li>
 <li><p>Da die KNN Regression auf Distanzen basiert, war ein Scaling notwendig. Im Test hat sich gezeigt, dass man mit dem StandardScaler bessere Ergebnisse erzielt.</p></li>
 <li><p>Durch die GridSearch hat sich gezeigt, dass K = 5 der beste Wert ist, um ein besseres Ergebnis erzielen zu können.</p></li>
 <li><p>R2 = 0,835 -&gt; Das Regressionsmodell erklärt 83,5% der Streuung.</p></li>
@@ -1487,19 +1520,19 @@ pipeline10 done
 <div class="section" id="randomforrest-regressor">
 <h3>RandomForrest Regressor<a class="headerlink" href="#randomforrest-regressor" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Mit dem RandomForrest Regressor konnte das beste Ergebniss erzielt werden.</p></li>
-<li><p>Im Vergleich zum Baselinemodell, konnte das Modell mit der Preprocessing-Pipeline das Ergebniss um 3,3% verbessern.</p></li>
+<li><p>Mit dem RandomForrest Regressor konnte das beste Ergebnis erzielt werden.</p></li>
+<li><p>Im Vergleich zum Baselinemodell, konnte das Modell mit der Preprocessing-Pipeline das Ergebnis um 3,3% verbessern.</p></li>
 <li><p>Standardmäßig wurde immer der OneHotEncoder verwendet, um die kategorischen Variablen in der Regression zu nutzen.</p></li>
 <li><p>R2 = 0,888 -&gt; Das Regressionsmodell erklärt 88,8% der Streuung.</p></li>
 <li><p>RMSE = 4986 -&gt; Die vorhergesagten Werte liegen im Durchschnitt mit einem Abstand von 4986€ von den beobachteten Werten entfernt.</p></li>
-<li><p>MAE = 3279 -&gt; Der durschnittliche Vertikale Abstand zu den beobachteten Werten liegt bei 3279.</p></li>
+<li><p>MAE = 3279 -&gt; Der durchschnittliche vertikale Abstand zu den beobachteten Werten liegt bei 3279.</p></li>
 </ul>
 </div>
 <div class="section" id="gradientboosting-regressor">
 <h3>GradientBoosting Regressor<a class="headerlink" href="#gradientboosting-regressor" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Der GradientBoosting Regressor hat trotz einer unfangreichen Gridsearch einer der schlechteren Ergebnisse erzielt.</p></li>
-<li><p>Mit weiteren Hyperparamter-Tunng wäre sicherlich noch ein besseres Ergebniss möglich.</p></li>
+<li><p>Der GradientBoosting Regressor hat trotz einer umfangreichen Gridsearch einer der schlechteren Ergebnisse erzielt.</p></li>
+<li><p>Durch weiteres Hyperparamter-Tuning wäre sicherlich noch ein besseres Ergebnis möglich.</p></li>
 </ul>
 </div>
 </div>
@@ -1589,6 +1622,7 @@ pipeline10 done
 <ul class="simple">
 <li><p>R2 = 0,88</p></li>
 <li><p>RMSE = 4986</p></li>
+<li><p>Im Plot “”Actual vs Predicted” kann man erkennen, dass das Modell gute Ergebnisse geliefert hat. Es besteht eine starke Korrelation zwischen den Vorhersagen des Modells und den tatsächlichen Ergebnissen.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1607,6 +1641,564 @@ pipeline10 done
 <div class="cell_output docutils container">
 <img alt="../_images/modelbuilding_restwertermittlung_26_0.png" src="../_images/modelbuilding_restwertermittlung_26_0.png" />
 </div>
+</div>
+</div>
+<div class="section" id="weiterer-ansatz-lasso-regression">
+<h2>Weiterer Ansatz: Lasso Regression<a class="headerlink" href="#weiterer-ansatz-lasso-regression" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 799 entries, 0 to 798
+Data columns (total 14 columns):
+ #   Column          Non-Null Count  Dtype   
+---  ------          --------------  -----   
+ 0   carname         799 non-null    category
+ 1   price           799 non-null    float64 
+ 2   milage          799 non-null    float64 
+ 3   hubraum         799 non-null    float64 
+ 4   fuel_type       799 non-null    category
+ 5   transmission    799 non-null    category
+ 6   num_seats       799 non-null    category
+ 7   num_doors       799 non-null    category
+ 8   emission_class  799 non-null    category
+ 9   car_type        799 non-null    category
+ 10  num_owners      799 non-null    category
+ 11  Model           799 non-null    category
+ 12  power_ps        799 non-null    float64 
+ 13  age             799 non-null    float64 
+dtypes: category(9), float64(5)
+memory usage: 79.9 KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;carname&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="encode-categorial-variables">
+<h3>Encode categorial variables<a class="headerlink" href="#encode-categorial-variables" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="split-data">
+<h3>Split Data<a class="headerlink" href="#split-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>462    26750.0
+729    14200.0
+390    19999.0
+450    46990.0
+47     34977.0
+        ...   
+369    20780.0
+320    38900.0
+527    58690.0
+125    43580.0
+265    47880.0
+Name: price, Length: 559, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="standardisierung">
+<h3>Standardisierung<a class="headerlink" href="#standardisierung" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Die unabhängigen Variablen müssen für die Lasso Regression standardisert werden, damit eine bessere Perfomance des Modells erzielt werden kann.</p></li>
+<li><p>So müssen die numerischen Features um 0 herum zentriert sein und eine Varianz in der gleichen Größenordnung aufweisen.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;float64&#39;</span><span class="p">]</span>
+<span class="n">list_numerical</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">numerics</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">list_numerical</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;milage&#39;, &#39;hubraum&#39;, &#39;power_ps&#39;, &#39;age&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">list_numerical</span><span class="p">])</span> 
+
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">list_numerical</span><span class="p">])</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">list_numerical</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Zuweisung der standardisierten Werte</span>
+<span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;milage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_train_scaled</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;hubraum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_train_scaled</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;power_ps&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_train_scaled</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_train_scaled</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;milage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_test_scaled</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;hubraum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_test_scaled</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;power_ps&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_test_scaled</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_test_scaled</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>milage</th>
+      <th>hubraum</th>
+      <th>power_ps</th>
+      <th>age</th>
+      <th>fuel_type_Diesel</th>
+      <th>fuel_type_Hybrid</th>
+      <th>transmission_Schaltgetriebe</th>
+      <th>num_seats_3</th>
+      <th>num_seats_4</th>
+      <th>num_seats_5</th>
+      <th>...</th>
+      <th>Model_M-Klasse</th>
+      <th>Model_MarcoPolo</th>
+      <th>Model_OTHER</th>
+      <th>Model_R-Klasse</th>
+      <th>Model_S-Klasse</th>
+      <th>Model_SL</th>
+      <th>Model_Sprinter</th>
+      <th>Model_V-Klasse</th>
+      <th>Model_Vaneo</th>
+      <th>Model_Vito</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>462</th>
+      <td>1.131389</td>
+      <td>0.073690</td>
+      <td>-0.043343</td>
+      <td>1.332038</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>729</th>
+      <td>1.907324</td>
+      <td>-0.288242</td>
+      <td>-0.672051</td>
+      <td>1.270799</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>390</th>
+      <td>1.576670</td>
+      <td>-0.288242</td>
+      <td>-0.672051</td>
+      <td>0.229730</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>450</th>
+      <td>1.163352</td>
+      <td>0.073690</td>
+      <td>-0.206341</td>
+      <td>1.087081</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>0.551642</td>
+      <td>-0.288242</td>
+      <td>-0.159770</td>
+      <td>0.168490</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>369</th>
+      <td>2.006520</td>
+      <td>0.073690</td>
+      <td>-0.520695</td>
+      <td>0.290969</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>-0.943632</td>
+      <td>-0.211355</td>
+      <td>0.189512</td>
+      <td>-1.240015</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>527</th>
+      <td>-0.969368</td>
+      <td>-0.211355</td>
+      <td>1.144218</td>
+      <td>-2.097365</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>-0.867967</td>
+      <td>-0.288242</td>
+      <td>-0.520695</td>
+      <td>-1.301254</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>265</th>
+      <td>-0.997473</td>
+      <td>-0.288242</td>
+      <td>-0.159770</td>
+      <td>-1.484972</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>559 rows × 52 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="lasso-mit-dem-optimalen-alpha-wert">
+<h3>Lasso mit dem optimalen Alpha-Wert<a class="headerlink" href="#lasso-mit-dem-optimalen-alpha-wert" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LassoCV</span>
+
+<span class="c1"># Lasso with 5 fold cross-validation</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LassoCV</span><span class="p">(</span><span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># Fit model</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LassoCV(cv=5, max_iter=10000, random_state=0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">alpha_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>27.280300831304658
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Durch die Kreuzvaliderung kam heraus, dass 8.93 der beste alpha-Wert ist.</p></li>
+</ul>
+</div>
+<div class="section" id="erstellung-des-lasso-modells">
+<h3>Erstellung des Lasso Modells<a class="headerlink" href="#erstellung-des-lasso-modells" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lasso_best</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">alpha_</span><span class="p">)</span>
+<span class="n">lasso_best</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Lasso(alpha=27.280300831304658)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Modell-Koeffizienten:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">lasso_best</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">X</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(-4231.171444807786, &#39;milage&#39;), (1426.548417068822, &#39;hubraum&#39;), (7300.856243163212, &#39;power_ps&#39;), (-5922.131306880558, &#39;age&#39;), (3193.8675002950636, &#39;fuel_type_Diesel&#39;), (5613.378904568733, &#39;fuel_type_Hybrid&#39;), (-3925.3791162875164, &#39;transmission_Schaltgetriebe&#39;), (-2901.149269512689, &#39;num_seats_3&#39;), (1753.7580355917416, &#39;num_seats_4&#39;), (-4970.470443223313, &#39;num_seats_5&#39;), (7206.316348717148, &#39;num_seats_6&#39;), (8545.208085855738, &#39;num_seats_7&#39;), (0.0, &#39;num_seats_8&#39;), (0.0, &#39;num_seats_9&#39;), (3620.793007832022, &#39;num_doors_4/5&#39;), (-0.0, &#39;emission_class_Euro6&#39;), (-285.55572155468326, &#39;emission_class_Euro6c&#39;), (882.4813234379563, &#39;emission_class_Euro6d&#39;), (5760.021245659876, &#39;car_type_cabrio&#39;), (-0.0, &#39;car_type_kleinwagen&#39;), (-1985.2047015650357, &#39;car_type_kombi&#39;), (-7.414415084978062, &#39;car_type_limousine&#39;), (4917.471608028286, &#39;car_type_sport&#39;), (4197.832824804228, &#39;car_type_suv&#39;), (-0.0, &#39;car_type_van&#39;), (272.1644020524715, &#39;num_owners_2&#39;), (-423.98255503684993, &#39;num_owners_3&#39;), (0.0, &#39;num_owners_10&#39;), (876.9214438746592, &#39;Model_B-Klasse&#39;), (-235.14261700313557, &#39;Model_C-Klasse&#39;), (1964.9183042503807, &#39;Model_CL&#39;), (-1491.317729829414, &#39;Model_CLA&#39;), (0.0, &#39;Model_CLC&#39;), (0.0, &#39;Model_E-Klasse&#39;), (-0.0, &#39;Model_G-Klasse&#39;), (0.0, &#39;Model_GL&#39;), (1475.4426033059003, &#39;Model_GLA&#39;), (-0.0, &#39;Model_GLB&#39;), (799.7887096431713, &#39;Model_GLC&#39;), (-0.0, &#39;Model_GLE&#39;), (-127.54452563824081, &#39;Model_GLS&#39;), (0.0, &#39;Model_GT&#39;), (-0.0, &#39;Model_M-Klasse&#39;), (0.0, &#39;Model_MarcoPolo&#39;), (-290.0204436711111, &#39;Model_OTHER&#39;), (0.0, &#39;Model_R-Klasse&#39;), (0.0, &#39;Model_S-Klasse&#39;), (-0.0, &#39;Model_SL&#39;), (0.0, &#39;Model_Sprinter&#39;), (0.0, &#39;Model_V-Klasse&#39;), (-0.0, &#39;Model_Vaneo&#39;), (117.9276677887427, &#39;Model_Vito&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="modell-evaluation">
+<h3>Modell Evaluation<a class="headerlink" href="#modell-evaluation" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R squared training set&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">lasso_best</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R squared test set&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">lasso_best</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R squared training set 84.85
+R squared test set 82.87
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Im Vergleich zu den anderen Modellen aus der Pipeline scheidet die Lasso Regression mit einem R2 von 82.87 ähnlich gut ab wie die Lineare Regression(84,8) und die KNN Regression (83.5).</p></li>
+<li><p>So bleibt das beste Modell weiterhin der Randomforest Regressor mit einem R2 von 88.8.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">lasso_best</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RMSE:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RMSE: 6046.42
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bei der Lasso Regression liegen die vorhergesagten Werte im Durchschnitt mit einem Abstand von 6046,42 von den beobachteten Werten entfernt.</p>
 </div>
 </div>
 </div>
