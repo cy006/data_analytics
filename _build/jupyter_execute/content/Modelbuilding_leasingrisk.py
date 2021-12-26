@@ -46,6 +46,8 @@ df.info()
 
 # ## One-Hot Encoding
 
+# - Es gibt zwar Algorithmen die direkt mit kategorialen Daten arbeiten können wie bspw. DecisionTrees, jedoch gibt es auch einige Algorithmen die nicht direkt mit kategorialen Variablen arbeiten können. So müssen die Daten in eine numerische Form überführt werden. An dieser Stelle habe ich mit pd.get_dummies die kategorialen Daten in numerische Daten umgewandelt.
+
 # In[6]:
 
 
@@ -80,36 +82,55 @@ print(model.summary())
 
 # - Betrachtet man den p-Value der unabhängigen Variablen, dann kann man erkennen, dass nur die Features ApplicantIncome, Fahrzeugwert, Leasingrate und Education_Not_Graduate signifikant sind. Somit werde das Modell nochmals überarbeiten.
 
+# In[11]:
+
+
+print(model.aic)
+
+
+# - Für das model1 habe ich den Akaike information criterion (AIC) berechnet, um später beurteilen zu können, ob die Qualität des Modells im Vergleich zum model2 abnimmt oder zunimmt.
+# - Beim model2 entferne ich alle Features, die einen p-Value über 0.05 haben und berechne dann nochmals den AIC. 
+
 # ### Updating Modell
 
-# In[11]:
+# In[12]:
 
 
 model2 = smf.glm(formula = 'label_Risk ~ ApplicantIncome + Fahrzeugwert + leasingrate + Education_Not_Graduate ' , data=df, family=sm.families.Binomial()).fit()
 
 
-# In[12]:
+# In[13]:
 
 
 print(model2.summary())
 
 
+# In[14]:
+
+
+print(model2.aic)
+
+
+# - Der AIC-Wert von 145 zeigt, dass das model2 im Verlgleich zum model1, das bessere Modell ist. Somit werde ich mit dem model2 weiter fortfahren.
+
 # ### Predictions
 
-# In[13]:
+# In[15]:
 
 
 # Predict and join probabilty to original dataframe
 df['Probability_no'] = model2.predict()
 
 
-# In[14]:
+# In[16]:
 
 
 df
 
 
-# In[15]:
+# - Um den optimalen Schwellenwert zu defnieren, werde ich im folgenden unterschiedliche Schwellenwerte testen. Hierzu verwende ich Schwellenwerte von 0.3 bis 0.7.
+
+# In[17]:
 
 
 # Use thresholds to discretize Probability
@@ -124,7 +145,7 @@ df
 
 # ### Confusionmatrix und Metriken
 
-# In[16]:
+# In[18]:
 
 
 def print_metrics(df, predicted):
@@ -156,7 +177,7 @@ def print_metrics(df, predicted):
     print(f'F1 Score:  {f1_score:.4f} \n')
 
 
-# In[17]:
+# In[19]:
 
 
 print_metrics(df, 'Threshold 0.3')
@@ -166,9 +187,9 @@ print_metrics(df, 'Threshold 0.6')
 print_metrics(df, 'Threshold 0.7')
 
 
-# ## Zusammenfassung des GLM
+# ## Zusammenfassung von model2
 # - Mit dem Generalized linear Modell konnte mit dem Schwellenwert von 0.4 der beste F-Score mit 99% berechnet werden.
-# - Ich habe mich gegen SMOTE entschieden, da diese Methode auch ein Overfitting mitsichbringen kann und das Modell trotz einem unbalancierten Modell sehr gut performt.
+# - Ich habe mich gegen SMOTE entschieden, da diese Methode auch ein Overfitting mit sich bringen kann und das Modell trotz einem unbalancierten Modell sehr gut performt.
 # - Da es in diesem Usecase darum geht, das Risiko von Leasinganträgen zu reduzieren, bevorzuge ich den Recall als Evaluationsmetrik, da der Fokus mehr auf false-negative liegt.
 # - Wenn es tatsächlich ein Risiko ist, aber es als kein Risiko vorhergesagt wurde, ensteht für Mercedes Benz ein Schaden und diesen gilt es zu vermeiden. -> Deshalb bevorzuge ich den Recall als Evaluationsmetrik.
 # - **Das Modell wurde hier mit dem ganzen Datensatz gefittet. In den folgenden Zeilen werde ich Traings- und Testdaten erstellen und mit vielen unterschiedlichen Klassifikationsalgorithmen weitere Modelle erstellen.**
@@ -177,7 +198,7 @@ print_metrics(df, 'Threshold 0.7')
 
 # ### Import Dependencies
 
-# In[18]:
+# In[20]:
 
 
 import time
@@ -209,30 +230,30 @@ from sklearn.metrics import make_scorer
 
 # ### Create Train- and Testdataset
 
-# In[19]:
+# In[21]:
 
 
 df_sk = df.drop(['Probability_no', 'Threshold 0.3', 'Threshold 0.4', 'Threshold 0.5', 'Threshold 0.6', 'Threshold 0.7'], axis=1)
 
 
-# In[20]:
+# In[22]:
 
 
 X = df_sk.drop('label_Risk', axis=1)
 y = df_sk['label_Risk']
 
 
-# In[21]:
+# In[23]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0, shuffle=True, stratify=y)
 
 
-# Der Wert **random_state** stellt die Reproduzierbarkeit sicher, **shuffle** sorgt dafür, dass die Daten durcheinander gewürfelt werden, für den Fall, dass alle betrügerischen Bestellungen in den Daten zusammenliegen, und **stratify** stellt sicher, dass der Prozentsatz der betrügerischen Bestellungen in den Trainings- und Testdatensätzen gleich ist.
+# Der Wert **random_state** stellt die Reproduzierbarkeit sicher, **shuffle** sorgt dafür, dass die Daten durcheinander gewürfelt werden, für den Fall, dass alle Risikofälle in den Daten zusammenliegen, und **stratify** stellt sicher, dass der Prozentsatz der Risikofälle in den Trainings- und Testdaten gleich ist.
 
 # ### Baseline Models
 
-# In[22]:
+# In[24]:
 
 
 classifiers = {
@@ -250,8 +271,11 @@ classifiers = {
 
 # Im folgenden wird auch eine K fold cross validation durchgeführt. Dadurch wird sichergestellt, dass jeder Fold den gleichen Anteil an positiven (Risiko) Klassen enthält.
 
-# In[23]:
+# In[25]:
 
+
+import warnings
+warnings.filterwarnings('ignore')
 
 df_models = pd.DataFrame(columns=['model', 'run_time', 'F1_mean'])
 
@@ -286,27 +310,28 @@ for key in classifiers:
 # - Hier habe ich einen benutzerdefinierten Scorer mit make_scorer() erstellt, um den durchschnittlichen F1_Score in der Kreuzvalidierung für jedes Modell zu berechnen.
 # - Die Ergebnisse werden dann in dem Dataframe df_models abgespeichert.
 
-# In[24]:
+# In[26]:
 
 
 df_models.sort_values(by='F1_mean')
 
 
-# In[25]:
+# In[27]:
 
 
+sns.set(rc={'figure.figsize':(11.7,8.27)})
 plot_order = df_models.groupby('model')['F1_mean'].sum().sort_values(ascending=False).index.values
 clrs = ['grey' if (x < max(df_models.F1_mean)) else '#1DB5DA' for x in df_models.F1_mean]
-sns.barplot(x='model', y='F1_mean', data= df_models, palette=clrs, order=plot_order);
+sns.barplot(x='F1_mean', y='model', data= df_models, palette=clrs, order=plot_order);
 
 
 # - **Das Modell LogisticRegression hat im Verlgeich zu den anderen am besten abgeschnitten** -> Mit einem druchschnittlichen F1 Score von 0,959.
 # - Der XBgoost_Classifier hat ebenfalls einen sehr guten F1_Score erzielen können und ist auf dem zweiten Platz gelandet.
-# - Dieses Modell werde in den folgenden Zeilen genauer betrachten, indem ich dafür eine Confusionmatrix erstelle und weitere Metriken berechne.
+# - Die logistische Regression werde in den folgenden Zeilen genauer betrachten, indem ich dafür eine Confusionmatrix erstelle und weitere Metriken berechne.
 
 # ### Bestes Modell: Logistic Regression
 
-# In[26]:
+# In[28]:
 
 
 df_result = pd.DataFrame(columns=['model', 'tp', 'tn', 'fp', 'fn', 'correct', 'incorrect',
@@ -345,7 +370,7 @@ df_result.head()
 # - Ob ein Leasingantrag genehmigt werde soll oder nicht, kann das Klassifikationsmodell mit einer Genauigkeit von 100% einschätzen. Somit könnte man das Risiko von Zahlungsausfällen von den Leasingnehmern reduzieren.
 # - Das perfekte Ergebnis überrascht micht nicht, da das Modell die "einfache" Struktur verstanden hat, wie ich das Label für diesen Datensatz erzeugt habe.
 
-# In[27]:
+# In[29]:
 
 
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay

@@ -79,7 +79,7 @@ for col in cols:
 
 # - Es gibt keine Fehler bzw. Inkonsistenzen in den Daten.
 # - Das Label "No Riks" ist überpräsentiert in Daten -> Somit handelt es sich um einen imbalanced dataset. So kann man dieser Stelle auf eine Sampling Methode zurückgreifen.
-# - Ich werde hierzu später die Methode SMOTE (Synthetic Minority Oversampling Technique) verwenden, um mehr Instanzen von der unterpräsentierten Gruppe zu erzeugen.
+# - Um das Ungleichgewicht in den Daten zu beseitigen, kann man später die Methode SMOTE (Synthetic Minority Oversampling Technique) verwenden, um mehr Instanzen von der unterpräsentierten Gruppe zu erzeugen.
 
 # In[10]:
 
@@ -170,7 +170,7 @@ df_normal_income = df[df['ApplicantIncome'] < 25000]
 sns.pairplot(hue="label", data=df_normal_income);
 
 
-# - Auch im Pairplot kann man erkennen, dass vor allem Personen mit einem geringem Einkommen ein Risiko darstellen, dass die Leasingraten nicht bezhalt werden können.
+# - Auch im Pairplot kann man erkennen, dass vor allem Personen mit einem geringem Einkommen ein Risiko darstellen.
 
 # In[19]:
 
