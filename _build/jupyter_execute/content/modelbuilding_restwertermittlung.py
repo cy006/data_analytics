@@ -596,32 +596,32 @@ sns.factorplot(y='Pipe',x='Score',data = results_df,kind='bar',size=5,aspect=2);
 # ## Erkenntnisse über die Modelle
 # 
 # ### Lineare Regression
-# - Bei der linearen Regression, hat sich heruasgestellt, dass man mit dem MinMax Scaler und dem OnehotEncoder den besten Wert erzielt.
+# - Bei der linearen Regression, hat sich herausgestellt, dass man mit dem MinMax Scaler und dem OnehotEncoder den besten Wert erzielt.
 # - In der Regressions Diagnostic wurde eigentlich erkannt, dass das Feature "hubraum" für eine Multikollinearität verantwortlich ist. Beim Testen hat sich jedoch gezeigt, dass das Modell mit dem Feature "hubraum" eine bessere Performance liefert.
 # - Vergleicht man das Baselinemodell mit dem Modell aus der Pipeline 10, kann man erkennen, dass man durch weitere Preprocessing-Schritte das Modell um 13,48% verbessert werden konnte.
 # - R2 = 0,848 -> Das Regressionsmodell erklärt 84,8% der Streuung.
 # - RMSE = 5805,33 -> Die vorhergesagten Werte liegen im Durchschnitt mit einem Abstand von 5805,33€ von den beobachteten Werten entfernt.
-# - MAE = 4191,97 -> Der durschnittliche Vertikale Abstand zu den beobachteten Werten liegt bei 4191,97.
+# - MAE = 4191,97 -> Der durchschnittliche vertikale Abstand zu den beobachteten Werten liegt bei 4191,97.
 # 
 # ### KNN Regression
-# - Die KNN Regression hat im Vergleich mit der linearen Regresion änhlich gut abgeschnitten.
-# - Auch hier hat sich gezeigt, dass weitere Preprocessing-Schritte einen positiven Eininfluss auf das Modell haben.
+# - Die KNN Regression hat im Vergleich mit der linearen Regression ähnlich gut abgeschnitten.
+# - Auch hier hat sich gezeigt, dass weitere Preprocessing-Schritte einen positiven Einfluss auf das Modell haben.
 # - Da die KNN Regression auf Distanzen basiert, war ein Scaling notwendig. Im Test hat sich gezeigt, dass man mit dem StandardScaler bessere Ergebnisse erzielt.
 # - Durch die GridSearch hat sich gezeigt, dass K = 5 der beste Wert ist, um ein besseres Ergebnis erzielen zu können.
 # - R2 = 0,835 -> Das Regressionsmodell erklärt 83,5% der Streuung.
 # - Und hat einen RMSE von 6046,44 und einen MAE von 4408,79.
 # 
 # ### RandomForrest Regressor
-# - Mit dem RandomForrest Regressor konnte das beste Ergebniss erzielt werden.
-# - Im Vergleich zum Baselinemodell, konnte das Modell mit der Preprocessing-Pipeline das Ergebniss um 3,3% verbessern.
+# - Mit dem RandomForrest Regressor konnte das beste Ergebnis erzielt werden.
+# - Im Vergleich zum Baselinemodell, konnte das Modell mit der Preprocessing-Pipeline das Ergebnis um 3,3% verbessern.
 # - Standardmäßig wurde immer der OneHotEncoder verwendet, um die kategorischen Variablen in der Regression zu nutzen.
 # - R2 = 0,888 -> Das Regressionsmodell erklärt 88,8% der Streuung.
 # - RMSE = 4986 -> Die vorhergesagten Werte liegen im Durchschnitt mit einem Abstand von 4986€ von den beobachteten Werten entfernt.
-# - MAE = 3279 -> Der durschnittliche Vertikale Abstand zu den beobachteten Werten liegt bei 3279.
+# - MAE = 3279 -> Der durchschnittliche vertikale Abstand zu den beobachteten Werten liegt bei 3279.
 # 
 # ### GradientBoosting Regressor
-# - Der GradientBoosting Regressor hat trotz einer unfangreichen Gridsearch einer der schlechteren Ergebnisse erzielt.
-# - Mit weiteren Hyperparamter-Tunng wäre sicherlich noch ein besseres Ergebniss möglich.
+# - Der GradientBoosting Regressor hat trotz einer umfangreichen Gridsearch einer der schlechteren Ergebnisse erzielt.
+# - Durch weiteres Hyperparamter-Tuning wäre sicherlich noch ein besseres Ergebnis möglich.
 
 # ## Bestes Modell
 
@@ -690,6 +690,7 @@ plt.show(fig)
 
 # - R2 = 0,88
 # - RMSE = 4986
+# - Im Plot ""Actual vs Predicted" kann man erkennen, dass das Modell gute Ergebnisse geliefert hat. Es besteht eine starke Korrelation zwischen den Vorhersagen des Modells und den tatsächlichen Ergebnissen.
 
 # In[194]:
 
@@ -704,11 +705,151 @@ df_res['price'] = y_test
 sns.scatterplot(data = df_res, x=y_test, y=y_pred, hue='Model' );
 
 
-# In[ ]:
+# ## Weiterer Ansatz: Lasso Regression
+
+# In[66]:
 
 
+df.info()
 
 
+# In[78]:
+
+
+X = df.drop(['carname', 'price'],axis=1)
+y = df['price']
+
+
+# ### Encode categorial variables
+
+# In[79]:
+
+
+X = pd.get_dummies(X, drop_first=True)
+
+
+# ### Split Data
+
+# In[80]:
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=10)
+
+
+# In[82]:
+
+
+y_train
+
+
+# ### Standardisierung
+
+# - Die unabhängigen Variablen müssen für die Lasso Regression standardisert werden, damit eine bessere Perfomance des Modells erzielt werden kann.
+# - So müssen die numerischen Features um 0 herum zentriert sein und eine Varianz in der gleichen Größenordnung aufweisen.
+
+# In[85]:
+
+
+numerics = ['float64']
+list_numerical = X.select_dtypes(include=numerics).columns.tolist()
+list_numerical
+
+
+# In[87]:
+
+
+scaler = StandardScaler().fit(X_train[list_numerical]) 
+
+X_train_scaled = scaler.transform(X_train[list_numerical])
+X_test_scaled = scaler.transform(X_test[list_numerical])
+
+
+# In[105]:
+
+
+# Zuweisung der standardisierten Werte
+X_train['milage'] = X_train_scaled[:,0]
+X_train['hubraum'] = X_train_scaled[:,1]
+X_train['power_ps'] = X_train_scaled[:,2]
+X_train['age'] = X_train_scaled[:,3]
+
+X_test['milage'] = X_test_scaled[:,0]
+X_test['hubraum'] = X_test_scaled[:,1]
+X_test['power_ps'] = X_test_scaled[:,2]
+X_test['age'] = X_test_scaled[:,3]
+
+
+# In[107]:
+
+
+X_train
+
+
+# ### Lasso mit dem optimalen Alpha-Wert
+
+# In[108]:
+
+
+from sklearn.linear_model import LassoCV
+
+# Lasso with 5 fold cross-validation
+model = LassoCV(cv=5, random_state=0, max_iter=10000)
+
+# Fit model
+model.fit(X_train, y_train)
+
+
+# In[109]:
+
+
+model.alpha_
+
+
+# - Durch die Kreuzvaliderung kam heraus, dass 8.93 der beste alpha-Wert ist.
+
+# ### Erstellung des Lasso Modells
+
+# In[110]:
+
+
+lasso_best = Lasso(alpha=model.alpha_)
+lasso_best.fit(X_train, y_train)
+
+
+# Modell-Koeffizienten:
+
+# In[111]:
+
+
+print(list(zip(lasso_best.coef_, X)))
+
+
+# ### Modell Evaluation
+
+# In[112]:
+
+
+print('R squared training set', round(lasso_best.score(X_train, y_train)*100, 2))
+print('R squared test set', round(lasso_best.score(X_test, y_test)*100, 2))
+
+
+# - Im Vergleich zu den anderen Modellen aus der Pipeline scheidet die Lasso Regression mit einem R2 von 82.87 ähnlich gut ab wie die Lineare Regression(84,8) und die KNN Regression (83.5).
+# - So bleibt das beste Modell weiterhin der Randomforest Regressor mit einem R2 von 88.8.
+
+# In[113]:
+
+
+y_pred = lasso_best.predict(X_test)
+
+
+# In[124]:
+
+
+mean_squared_error(y_test, y_pred, squared=False)
+print('RMSE:', round(mean_squared_error(y_test, y_pred, squared=False),2))
+
+
+# Bei der Lasso Regression liegen die vorhergesagten Werte im Durchschnitt mit einem Abstand von 6046,42 von den beobachteten Werten entfernt.
 
 # In[ ]:
 
