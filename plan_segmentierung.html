@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Applied Data Analytics</title>
+    <title>1. Einführung</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1. Einführung" href="plan_restwertermittlung.html" />
+    <link rel="prev" title="4. Modelbuilding" href="content/Modelbuilding_leasingrisk.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -87,8 +87,8 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
    Applied Data Analytics
   </a>
  </li>
@@ -157,9 +157,9 @@
   Kundensegmentierung
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="plan_segmentierung.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    1. Einführung
   </a>
  </li>
@@ -204,7 +204,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/plan_segmentierung.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -224,7 +224,7 @@
                 data-toggle="tooltip" data-placement="left" title="Quell-Repository"><i
                     class="fab fa-github"></i>Repository</button></a>
         <a class="issues-button"
-            href="https://github.com/cy006/data_analytics/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/cy006/data_analytics/issues/new?title=Issue%20on%20page%20%2Fplan_segmentierung.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Öffnen Sie ein Problem"><i class="fas fa-lightbulb"></i>offenes Thema</button></a>
         
@@ -251,8 +251,23 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#wie-schafft-liefert-und-erfasst-daimler-werte">
-   Wie schafft, liefert und erfasst Daimler Werte?
+  <a class="reference internal nav-link" href="#identifizierung-von-usecases">
+   Identifizierung von Usecases
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#erste-problemdefinition">
+   Erste Problemdefinition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#identifizierung-von-potenziellen-relevanten-variablen">
+   Identifizierung von potenziellen relevanten Variablen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#definition-der-metriken">
+   Definition der Metriken
   </a>
  </li>
 </ul>
@@ -266,21 +281,48 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="applied-data-analytics">
-<h1>Applied Data Analytics<a class="headerlink" href="#applied-data-analytics" title="Permalink to this headline">¶</a></h1>
-<p>In diesem Projekt werde ich anhand des Data Science Lifecycle-Modells 3 unterschiedliche Use Cases für die Daimler AG umsetzen.
-Hierbei beschäftige ich mich mit der Regression, Klassifikation und dem Clustering.</p>
-<p>Das Business Modell Canvas eignet sich ideal dafür, um interessante Use Cases zu identifizieren. So habe ich die Daimler Ag mit all ihren Bestandteilen durchleuchtet und die Ergebnisse im folgdenen Business Modell Canvas zusammengefasst. Auf dieser Basis erhielt ich einen umfassenden Überblick und ich konnte so mögliche Use Cases identifizieren.</p>
-<div class="section" id="wie-schafft-liefert-und-erfasst-daimler-werte">
-<h2>Wie schafft, liefert und erfasst Daimler Werte?<a class="headerlink" href="#wie-schafft-liefert-und-erfasst-daimler-werte" title="Permalink to this headline">¶</a></h2>
-<p><img alt="Business Model Canvas" src="_images/daimler-business-model-canvas.png" /></p>
-<p>Die Daimler AG gehört mit den Geschäftsfeldern Mercedes Benz Cars &amp; Vans, Daimler Trucks &amp; Buses und Daimler Mobility zu den größten Anbietern von Premiumfahrzeugen. Neben den Premiumfahrzeugen ist die Daimler AG auch einer der größten Hersteller von Nutzfahrzeugen. Mit 288.481 Mitarbeitern und Produktionsstätten auf der ganzen Welt arbeitet Daimler an unterschiedlichsten Themen wie digitale Dienstleistungen, innovative Mobilitätsdienstleistungen, alternative Antriebstechniken und autonomes Fahren.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="einfuhrung">
+<h1>1. Einführung<a class="headerlink" href="#einfuhrung" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="identifizierung-von-usecases">
+<h2>Identifizierung von Usecases<a class="headerlink" href="#identifizierung-von-usecases" title="Permalink to this headline">¶</a></h2>
+<p><strong>Kundensegmentierung für zielgerichtetes Marketing</strong></p>
+<p><img alt="segmentierung" src="_images/clustering_Daimler.png" /></p>
+<p>Auch für Mercedes Benz ist es wichtig, dass sie ein tiefes Verständnis über Ihre Kunden entwickeln, um ihre Kunden dauerhaft binden zu können. In den meisten Fällen leasen die Kunden die Fahrzeuge für 36 Monate und geben sie dann wieder zurück an den Automobilhersteller. Damit die Kundenbeziehung an dieser Stelle nicht endet, ist es besonders wichtig, den Kunden zu kennen. Mit einer zielgerichteten Ansprache an den Kunden, könnte man den Kunden ein neues Fahrzeug bzw. ein neues Angebot unterbreiten, sodass er erneut ein Fahrzeug von Mercedes Benz least. Um solche Marketingaktivitäten umzusetzen, muss vorher eine Kundensegmentierung mittels einer Clusteranalyse durchgeführt werden. Das bringt uns auch schon zu der ersten Problemdefinition.</p>
 </div>
-<div class="toctree-wrapper compound">
+<div class="section" id="erste-problemdefinition">
+<h2>Erste Problemdefinition<a class="headerlink" href="#erste-problemdefinition" title="Permalink to this headline">¶</a></h2>
+<p>Ich erforsche die Kundengruppen, die einen Leasingvertrag bei Mercedes Benz abgeschlossen haben, weil ich herausfinden möchte, ob man die Kunden in homogene Cluster unterteilen kann. Darauf basierend kann das Marketing-Team diese Erkenntnisse für ein zielgerichtetes Marketing nutzen, um die Kundenbeziehungen aufrechtzuerhalten.</p>
+<p><img alt="Kundensegmentierung" src="_images/kundensegment.png" /></p>
 </div>
-<div class="toctree-wrapper compound">
+<div class="section" id="identifizierung-von-potenziellen-relevanten-variablen">
+<h2>Identifizierung von potenziellen relevanten Variablen<a class="headerlink" href="#identifizierung-von-potenziellen-relevanten-variablen" title="Permalink to this headline">¶</a></h2>
+<p>Für die Kundensegmentierung können unterschiedlichste Daten verwendet werden wie demografische Daten, soziografische Daten sowie das Nutzungsverhalten/Kaufverhalten. In diesem Usecase bin ich jedoch auf ein paar Attribute beschränkt, da keine relevanten Daten gefunden werden können. So stehen mir für die Segmentierung folgende Variablen zur Verfügung:</p>
+<ul class="simple">
+<li><p>Alter</p></li>
+<li><p>Geschlecht</p></li>
+<li><p>Einkommen</p></li>
+<li><p>Leasingrate</p></li>
+</ul>
 </div>
-<div class="toctree-wrapper compound">
+<div class="section" id="definition-der-metriken">
+<h2>Definition der Metriken<a class="headerlink" href="#definition-der-metriken" title="Permalink to this headline">¶</a></h2>
+<p><strong>Heuristische Gedanken</strong>
+Wenn man kein Clusterverfahren verwenden würde, würde man die Daten manuell sichten. Dabei wäre es möglich, dass Muster in einem höherdimensionalen Raum unentdeckt bleiben würden und somit nicht identifizierte Kundengruppen nicht zielgerichtet angesprochen werden können.</p>
+<p><strong>Model Problem Definition</strong>
+Mit Hilfe eines Clusterverfahrens sollen die bestehenden Kunden segmentiert werden, sodass unterschiedliche Kundengruppen identifiziert und zielgerichtet angesprochen werden. So könnte man das zur Verfügung stehende Marketingbudget effizienter und effektiver einsetzen, um den Kunden beispielsweise ein ähnliches Fahrzeug oder ein neueres Modell in seiner Preisklasse vorzuschlagen.</p>
+<p>** Definition der Erfolgsmetriken**</p>
+<p>Erfolgsmetriken:</p>
+<ul class="simple">
+<li><p>Aufrechterhaltung der Kundenbeziehung</p></li>
+</ul>
+<p>Key results (KR):</p>
+<ul class="simple">
+<li><p>10% mehr Leasingabschlüsse bei einem Leasingvertragsende.</p></li>
+</ul>
+<p>Misserfolg des Modells:</p>
+<ul class="simple">
+<li><p>Es konnten keine Kundengruppen in den Daten identifiziert werden und somit keine Erkenntnisse für das Marketing zur Verfügung gestellt werden.</p></li>
+</ul>
 </div>
 </div>
 
@@ -308,13 +350,13 @@ Hierbei beschäftige ich mich mit der Regression, Klassifikation und dem Cluster
               
         
             <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="plan_restwertermittlung.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">1. Einführung</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="content/Modelbuilding_leasingrisk.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">4. Modelbuilding</p>
+        </div>
     </a>
 </div>
         
