@@ -17,3 +17,6 @@ parts:
   - file: content/Create_clean_Dataset
   - file: content/Exploration_leasingrisk
   - file: content/Modelbuilding_leasingrisk
+- caption: Kundensegmentierung
+  chapters:
+  - file: plan_segmentierung

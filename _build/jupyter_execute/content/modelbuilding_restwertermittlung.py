@@ -805,7 +805,7 @@ model.fit(X_train, y_train)
 model.alpha_
 
 
-# - Durch die Kreuzvaliderung kam heraus, dass 8.93 der beste alpha-Wert ist.
+# - Durch die Kreuzvaliderung kam heraus, dass 27,28 der beste alpha-Wert ist.
 
 # ### Erstellung des Lasso Modells
 
