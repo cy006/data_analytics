@@ -20,3 +20,6 @@ parts:
 - caption: Kundensegmentierung
   chapters:
   - file: plan_segmentierung
+  - file: content/Create_cluster_dataset
+  - file: content/EDA_segemntierung
+  - file: content/kmeans_segmentation
